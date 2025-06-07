@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Tags Learning Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --success: #4cc9f0;
+            --danger: #f72585;
+            --warning: #f8961e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --white: #ffffff;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            animation: fadeInDown 0.8s ease;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(to right, #4361ee, #3a0ca3);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .card {
+            background-color: var(--white);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .player-form {
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(72, 149, 239, 0.1) 100%);
+            border: 1px solid rgba(67, 97, 238, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        .progress-container {
+            margin-bottom: 1.5rem;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        
+        .question {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .tag-example {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-left: 4px solid var(--accent);
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 0 8px 8px 0;
+            white-space: pre-wrap;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .option-btn {
+            padding: 1rem;
+            background-color: var(--white);
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option-btn:hover {
+            border-color: var(--accent);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+        }
+        
+        .feedback {
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .correct {
+            background-color: rgba(76, 201, 240, 0.2);
+            border-left: 4px solid var(--success);
+            color: #0a9396;
+        }
+        
+        .incorrect {
+            background-color: rgba(247, 37, 133, 0.1);
+            border-left: 4px solid var(--danger);
+            color: #ae2012;
+        }
+        
+        .leaderboard {
+            margin-top: 3rem;
+        }
+        
+        .player-list {
+            list-style-type: none;
+        }
+        
+        .player-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            margin: 0.5rem 0;
+            background-color: var(--white);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .player-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .player-rank {
+            font-weight: 700;
+            color: var(--primary);
+            min-width: 30px;
+        }
+        
+        .player-name {
+            font-weight: 600;
+            flex-grow: 1;
+            margin: 0 1rem;
+        }
+        
+        .player-score {
+            font-weight: 700;
+            color: var(--accent);
+        }
+        
+        .player-date {
+            font-size: 0.8rem;
+            color: var(--gray);
+            margin-left: 1rem;
+        }
+        
+        .medal {
+            margin-right: 0.5rem;
+        }
+        
+        .gold {
+            color: #ffd700;
+        }
+        
+        .silver {
+            color: #c0c0c0;
+        }
+        
+        .bronze {
+            color: #cd7f32;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .result-container {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .result-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin: 1rem 0;
+            background: linear-gradient(to right, var(--primary), var(--danger));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0;
+            animation: confetti 5s ease-in-out infinite;
+        }
+        
+        @keyframes confetti {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .player-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .player-date {
+                margin-left: 0;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-code"></i> HTML Tags Learning Game</h1>
+            <p>Test your HTML knowledge and climb the leaderboard!</p>
+        </header>
+        
+        <div id="player-section" class="card player-form">
+            <h2>Enter Your Details</h2>
+            <div class="form-group">
+                <label for="player-name"><i class="fas fa-user"></i> Your Name:</label>
+                <input type="text" id="player-name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="player-score"><i class="fas fa-star"></i> Starting Score (0-100):</label>
+                <input type="number" id="player-score" min="0" max="100" value="50" required>
+            </div>
+            <button id="start-game" class="btn btn-block">
+                <i class="fas fa-play"></i> Start Game
+            </button>
+        </div>
+        
+        <div id="game-section" class="card hidden">
+            <div class="progress-container">
+                <div class="progress-text">
+                    <span>Question <span id="current-question">1</span> of <span id="total-questions">10</span></span>
+                    <span>Score: <span id="current-score">0</span></span>
+                    <span>Questions left: <span id="questions-remaining">0</span></span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+            
+            <div class="question" id="question-text"></div>
+            <div class="tag-example" id="tag-example"></div>
+            
+            <div class="options" id="options-container"></div>
+            
+            <div class="feedback" id="feedback"></div>
+            
+            <button id="next-question" class="btn hidden">
+                <i class="fas fa-arrow-right"></i> Next Question
+            </button>
+            <button id="finish-game" class="btn hidden">
+                <i class="fas fa-trophy"></i> Finish Game
+            </button>
+        </div>
+        
+        <div id="result-section" class="card result-container hidden">
+            <h2>Game Completed!</h2>
+            <div class="result-score" id="final-score"></div>
+            <p id="result-message"></p>
+            <button id="play-again" class="btn">
+                <i class="fas fa-redo"></i> Play Again
+            </button>
+        </div>
+        
+        <div class="card leaderboard">
+            <h2><i class="fas fa-crown"></i> Player Leaderboard</h2>
+            <ul class="player-list" id="player-list">
+                <!-- Player list will be populated here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Game data
+        const questionsByCategory = {
+            basic: [
+                {
+                    question: "Which tag is used to create a hyperlink?",
+                    example: "Click <a href='https://example.com'>here</a> to visit",
+                    options: ["<link>", "<a>", "<href>", "<url>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to define an unordered list?",
+                    example: "<ul>\n  <li>Item 1</li>\n  <li>Item 2</li>\n</ul>",
+                    options: ["<ol>", "<list>", "<ul>", "<dl>"],
+                    correctAnswer: 2
+                },
+                {
+                    question: "Which tag is used to embed an image?",
+                    example: "<img src='photo.jpg' alt='A beautiful sunset'>",
+                    options: ["<picture>", "<img>", "<image>", "<photo>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used for the most important heading?",
+                    example: "<h1>Main Title</h1>\n<h2>Subheading</h2>",
+                    options: ["<head>", "<h1>", "<heading>", "<title>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to create a paragraph?",
+                    example: "<p>This is a paragraph of text.</p>",
+                    options: ["<para>", "<p>", "<text>", "<paragraph>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to create a line break?",
+                    example: "First line<br>Second line",
+                    options: ["<break>", "<lb>", "<br>", "<newline>"],
+                    correctAnswer: 2
+                }
+            ],
+            textFormatting: [
+                {
+                    question: "Which tag is used for emphasized text?",
+                    example: "This is <em>important</em> text",
+                    options: ["<strong>", "<bold>", "<em>", "<important>"],
+                    correctAnswer: 2
+                },
+                {
+                    question: "Which tag is used for strongly important text?",
+                    example: "This is <strong>very important</strong>",
+                    options: ["<bold>", "<strong>", "<important>", "<b>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to create bold text without extra importance?",
+                    example: "Regular text <b>bold text</b>",
+                    options: ["<bold>", "<strong>", "<b>", "<heavy>"],
+                    correctAnswer: 2
+                },
+                {
+                    question: "Which tag is used for italic text?",
+                    example: "Regular text <i>italic text</i>",
+                    options: ["<italics>", "<i>", "<em>", "<italic>"],
+                    correctAnswer: 1
+                }
+            ],
+            forms: [
+                {
+                    question: "Which tag is used to create an input field?",
+                    example: "<input type='text' placeholder='Enter your name'>",
+                    options: ["<textfield>", "<input>", "<field>", "<text>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to create a dropdown list?",
+                    example: "<select>\n  <option>Option 1</option>\n</select>",
+                    options: ["<dropdown>", "<list>", "<select>", "<options>"],
+                    correctAnswer: 2
+                },
+                {
+                    question: "Which tag is used to create a form?",
+                    example: "<form action='/submit'>\n  <!-- form elements -->\n</form>",
+                    options: ["<form>", "<inputform>", "<webform>", "<submit>"],
+                    correctAnswer: 0
+                },
+                {
+                    question: "Which tag is used to create a button?",
+                    example: "<button type='submit'>Click me</button>",
+                    options: ["<btn>", "<button>", "<submit>", "<click>"],
+                    correctAnswer: 1
+                }
+            ],
+            tables: [
+                {
+                    question: "Which tag is used to define a table row?",
+                    example: "<table>\n  <tr>\n    <td>Data</td>\n  </tr>\n</table>",
+                    options: ["<tablerow>", "<tr>", "<row>", "<trow>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to define a table cell?",
+                    example: "<tr>\n  <td>Cell data</td>\n</tr>",
+                    options: ["<cell>", "<td>", "<tcell>", "<tablecell>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to define a table header cell?",
+                    example: "<tr>\n  <th>Header</th>\n</tr>",
+                    options: ["<thead>", "<th>", "<header>", "<theader>"],
+                    correctAnswer: 1
+                }
+            ],
+            semantic: [
+                {
+                    question: "Which tag is used to define the header of a document or section?",
+                    example: "<header>\n  <h1>Website Title</h1>\n</header>",
+                    options: ["<head>", "<header>", "<heading>", "<top>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to define the footer of a document or section?",
+                    example: "<footer>\n  <p>Copyright 2023</p>\n</footer>",
+                    options: ["<bottom>", "<foot>", "<footer>", "<end>"],
+                    correctAnswer: 2
+                },
+                {
+                    question: "Which tag is used to define a navigation section?",
+                    example: "<nav>\n  <a href='/'>Home</a>\n</nav>",
+                    options: ["<navbar>", "<navigation>", "<nav>", "<menu>"],
+                    correctAnswer: 2
+                },
+                {
+                    question: "Which tag is used to define an article?",
+                    example: "<article>\n  <h2>Article Title</h2>\n</article>",
+                    options: ["<post>", "<article>", "<story>", "<content>"],
+                    correctAnswer: 1
+                }
+            ],
+            multimedia: [
+                {
+                    question: "Which tag is used to embed audio?",
+                    example: "<audio controls>\n  <source src='audio.mp3'>\n</audio>",
+                    options: ["<sound>", "<audio>", "<mp3>", "<music>"],
+                    correctAnswer: 1
+                },
+                {
+                    question: "Which tag is used to embed video?",
+                    example: "<video controls>\n  <source src='video.mp4'>\n</video>",
+                    options: ["<movie>", "<video>", "<media>", "<clip>"],
+                    correctAnswer: 1
+                }
+            ],
+            meta: [
+                {
+                    question: "Which tag is used to link CSS files?",
+                    example: "<link rel='stylesheet' href='styles.css'>",
+                    options: ["<css>", "<style>", "<link>", "<stylesheet>"],
+                    correctAnswer: 2
+                },
+                {
+                    question: "Which tag is used to define metadata about the HTML document?",
+                    example: "<meta charset='UTF-8'>",
+                    options: ["<info>", "<metadata>", "<meta>", "<head>"],
+                    correctAnswer: 2
+                }
+            ]
+        };
+
+        // Game state
+        let currentPlayer = {};
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let currentQuestions = [];
+
+        // DOM elements
+        const playerSection = document.getElementById('player-section');
+        const gameSection = document.getElementById('game-section');
+        const playerNameInput = document.getElementById('player-name');
+        const playerScoreInput = document.getElementById('player-score');
+        const startGameBtn = document.getElementById('start-game');
+        const currentQuestionSpan = document.getElementById('current-question');
+        const totalQuestionsSpan = document.getElementById('total-questions');
+        const currentScoreSpan = document.getElementById('current-score');
+        const progressFill = document.getElementById('progress-fill');
+        const questionText = document.getElementById('question-text');
+        const tagExample = document.getElementById('tag-example');
+        const optionsContainer = document.getElementById('options-container');
+        const feedback = document.getElementById('feedback');
+        const nextQuestionBtn = document.getElementById('next-question');
+        const finishGameBtn = document.getElementById('finish-game');
+        const resultSection = document.getElementById('result-section');
+        const finalScore = document.getElementById('final-score');
+        const resultMessage = document.getElementById('result-message');
+        const playAgainBtn = document.getElementById('play-again');
+        const playerList = document.getElementById('player-list');
+        const questionsRemainingSpan = document.getElementById('questions-remaining');
+
+        // Initialize the game
+        function init() {
+            loadPlayers();
+            totalQuestionsSpan.textContent = "10";
+            
+            startGameBtn.addEventListener('click', startGame);
+            nextQuestionBtn.addEventListener('click', nextQuestion);
+            finishGameBtn.addEventListener('click', finishGame);
+            playAgainBtn.addEventListener('click', resetGame);
+        }
+
+        // Select 10 random questions
+        function selectRandomQuestions() {
+            const allQuestions = Object.values(questionsByCategory).flat();
+            currentQuestions = [...allQuestions]
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 10);
+            
+            totalQuestionsSpan.textContent = currentQuestions.length;
+        }
+
+        // Load players from localStorage
+        function loadPlayers() {
+            const players = JSON.parse(localStorage.getItem('htmlGamePlayers')) || [];
+            playerList.innerHTML = '';
+            
+            players.sort((a, b) => b.score - a.score);
+            
+            players.forEach((player, index) => {
+                const li = document.createElement('li');
+                li.className = 'player-item';
+                
+                let medal = '';
+                if (index === 0) medal = '<i class="fas fa-trophy gold medal"></i>';
+                else if (index === 1) medal = '<i class="fas fa-trophy silver medal"></i>';
+                else if (index === 2) medal = '<i class="fas fa-trophy bronze medal"></i>';
+                
+                li.innerHTML = `
+                    <div class="player-rank">${index + 1}</div>
+                    ${medal}
+                    <div class="player-name">${player.name}</div>
+                    <div class="player-score">${player.score} pts</div>
+                    <div class="player-date">${player.date}</div>
+                `;
+                playerList.appendChild(li);
+            });
+        }
+
+        // Save player to localStorage
+        function savePlayer(player) {
+            let players = JSON.parse(localStorage.getItem('htmlGamePlayers')) || [];
+            players.push(player);
+            localStorage.setItem('htmlGamePlayers', JSON.stringify(players));
+            loadPlayers();
+        }
+
+        // Start the game
+        function startGame() {
+            const name = playerNameInput.value.trim();
+            let startingScore = parseInt(playerScoreInput.value);
+            
+            if (!name) {
+                alert('Please enter your name');
+                return;
+            }
+            
+            if (isNaN(startingScore)) {
+                alert('Please enter a valid score');
+                return;
+            }
+            
+            selectRandomQuestions();
+            
+            currentPlayer = {
+                name: name,
+                score: startingScore,
+                date: new Date().toLocaleString()
+            };
+            
+            score = startingScore;
+            currentScoreSpan.textContent = score;
+            
+            playerSection.classList.add('hidden');
+            gameSection.classList.remove('hidden');
+            
+            currentQuestionIndex = 0;
+            showQuestion();
+        }
+
+        // Display current question
+        function showQuestion() {
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+            const question = currentQuestions[currentQuestionIndex];
+            
+            const progressPercent = ((currentQuestionIndex + 1) / currentQuestions.length) * 100;
+            progressFill.style.width = `${progressPercent}%`;
+            
+            questionsRemainingSpan.textContent = currentQuestions.length - currentQuestionIndex - 1;
+            
+            questionText.textContent = question.question;
+            tagExample.innerHTML = question.example;
+            
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'option-btn';
+                button.textContent = option;
+                button.addEventListener('click', () => checkAnswer(index));
+                optionsContainer.appendChild(button);
+            });
+            
+            feedback.style.display = 'none';
+            nextQuestionBtn.classList.add('hidden');
+            finishGameBtn.classList.add('hidden');
+        }
+
+        // Check answer
+        function checkAnswer(selectedIndex) {
+            const question = currentQuestions[currentQuestionIndex];
+            const buttons = optionsContainer.querySelectorAll('.option-btn');
+            
+            buttons.forEach(button => {
+                button.disabled = true;
+            });
+            
+            buttons[question.correctAnswer].style.backgroundColor = 'rgba(76, 201, 240, 0.2)';
+            buttons[question.correctAnswer].style.borderColor = 'var(--success)';
+            buttons[question.correctAnswer].style.color = 'var(--success)';
+            buttons[question.correctAnswer].style.fontWeight = '600';
+            
+            if (selectedIndex !== question.correctAnswer) {
+                buttons[selectedIndex].style.backgroundColor = 'rgba(247, 37, 133, 0.1)';
+                buttons[selectedIndex].style.borderColor = 'var(--danger)';
+                buttons[selectedIndex].style.color = 'var(--danger)';
+            }
+            
+            feedback.style.display = 'block';
+            if (selectedIndex === question.correctAnswer) {
+                feedback.textContent = '✅ Correct! Well done!';
+                feedback.className = 'feedback correct';
+                currentPlayer.score += 10;
+                score += 10;
+                currentScoreSpan.textContent = score;
+            } else {
+                feedback.textContent = `❌ Incorrect. The correct answer is: ${question.options[question.correctAnswer]}`;
+                feedback.className = 'feedback incorrect';
+            }
+            
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                nextQuestionBtn.classList.remove('hidden');
+            } else {
+                finishGameBtn.classList.remove('hidden');
+            }
+        }
+
+        // Next question
+        function nextQuestion() {
+            currentQuestionIndex++;
+            showQuestion();
+        }
+
+        // Finish game
+        function finishGame() {
+            currentPlayer.score = score;
+            savePlayer(currentPlayer);
+            gameSection.classList.add('hidden');
+            resultSection.classList.remove('hidden');
+            
+            finalScore.textContent = currentPlayer.score;
+            
+            let message = '';
+            if (currentPlayer.score >= 90) {
+                message = 'HTML Master! You know your tags exceptionally well!';
+                createConfetti();
+            } else if (currentPlayer.score >= 70) {
+                message = 'Great job! You have a solid understanding of HTML tags.';
+            } else if (currentPlayer.score >= 50) {
+                message = 'Good effort! Keep practicing to improve your HTML skills.';
+            } else {
+                message = 'Keep learning! Review HTML tags and try again.';
+            }
+            
+            resultMessage.textContent = message;
+        }
+
+        // Reset game
+        function resetGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            resultSection.classList.add('hidden');
+            playerSection.classList.remove('hidden');
+            playerNameInput.value = '';
+            playerScoreInput.value = '50';
+        }
+
+        // Create confetti animation
+        function createConfetti() {
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.backgroundColor = getRandomColor();
+                confetti.style.width = `${Math.random() * 10 + 5}px`;
+                confetti.style.height = `${Math.random() * 10 + 5}px`;
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        function getRandomColor() {
+            const colors = ['#4361ee', '#3a0ca3', '#4895ef', '#4cc9f0', '#f72585', '#7209b7'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Initialize the game
+        window.onload = init;
+    </script>
+</body>
+</html>
